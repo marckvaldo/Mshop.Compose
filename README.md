@@ -57,7 +57,7 @@ the following tools were used in building the project;
 - [Redis](https://redis.io/docs/latest/develop/ai/search-and-query/)
 - [Docker](https://www.docker.com/)
 
-#📝 License
+#📝 License <br/>
 this project is under the MIT license
 
 Made with ❤️ by Marckvaldo. 👋🏽 Contact me by (marckvaldo@hotmail.com, marckvaldowallas@gmail.com).<br/>

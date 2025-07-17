@@ -8,7 +8,7 @@
 This project contains dependencies for the Mshop project to work.
 
 <h4> 
-	🚧  Composer 🚀 Em construção...  🚧
+	🚧  Composer 🚀 project under construction...  🚧
 </h4>
 
 ### Prerequisites
@@ -59,6 +59,8 @@ the following tools were used in building the project;
 
 - [Mysql](https://www.mysql.com/)
 - [RabbitMQ](https://www.rabbitmq.com/)
+- [MongoDB](https://www.mongodb.com/try/download/community)
+- [Redis](https://redis.io/docs/latest/develop/ai/search-and-query/)
 - [Docker](https://www.docker.com/)
 
 #📝 License

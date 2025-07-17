@@ -1,7 +1,7 @@
 # Compose for Mshop project
 
 <div style="background-color: #f0f0f0; height:20vh; display: flex; flex-direction: row; justify-content: center;">
-<img src="https://github.com/marckvaldo/Mshop.API.Product/blob/main/images/eshoponcontainers-reference-application-architecture.png">
+<img src="https://github.com/marckvaldo/Mshop.Compose/blob/main/Imagens/Mshop.Compose.png">
 </div>
 
 ### Project Description

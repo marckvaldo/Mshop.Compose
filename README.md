@@ -44,12 +44,6 @@ you should now have some containers runing in your machine like theses are;
 - mongodb-dev
 - rabbitmq-dev
 
-
-### 🚀 Some images
-
-#### API
-<img src="https://github.com/marckvaldo/Mshop.API.Product/blob/main/images/Images.jpg">
-
 ### 🛠 Settings
 All configuration are in the docker-compose.yml file.
 

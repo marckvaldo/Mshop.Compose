@@ -8,7 +8,7 @@
 This project contains dependencies for the Mshop project to work.
 
 <h4> 
-	🚧  Composer 🚀 project under construction...  🚧
+	🚧  Composer 🚀 under construction...  🚧
 </h4>
 
 ### Prerequisites
@@ -60,6 +60,6 @@ the following tools were used in building the project;
 #📝 License
 this project is under the MIT license
 
-Made with ❤️ by Marckvaldo. 👋🏽 Contact me by (marckvaldo@hotmail.com, marckvaldowallas@gmail.com).
+Made with ❤️ by Marckvaldo. 👋🏽 Contact me by (marckvaldo@hotmail.com, marckvaldowallas@gmail.com).<br/>
 My linkedin https://www.linkedin.com/in/marckvaldo/
 

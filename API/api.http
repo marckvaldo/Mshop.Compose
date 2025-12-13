@@ -1,0 +1,91 @@
+documentacao API
+
+
+### Get Access Token for User
+POST  http://localhost:8080/realms/dev/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+username=dev
+&password=123
+&grant_type=password
+&client_id=msho-client-login
+&scope=openid
+# essa opção tem que esta marcado no client Direct access grant
+
+
+### get token acess
+# @name auth
+POST http://localhost:8080/realms/dev/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+client_id=mshop-client-application
+&client_secret=6KSPb7XjAqNgkZpsWA0KQoFoRowtp9r8
+&grant_type=client_credentials
+
+
+###############################################
+### 2) PEGAR O ACCESS TOKEN AUTOMATICAMENTE ###
+###############################################
+@token = {{auth.response.body.access_token}}
+
+
+###create user in keycloak
+POST http://localhost:8080/admin/realms/dev/users
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "username": "davi",
+  "email": "marckvaldo@hotmail.com",
+  "enabled": true,
+  "firstName": "João",
+  "lastName": "Silva",
+  "emailVerified": false,
+  "credentials": [
+    {
+      "type": "password",
+      "value": "91020410@Php",
+      "temporary": false
+    }
+  ]
+}
+
+###
+GET http://localhost:8080/admin/realms/dev/users?email=marckvaldo@hotmail.com
+Authorization: Bearer {{token}}
+
+### set useId
+@userId = be124253-31d9-44ed-a016-9de0f2000b63
+
+###send verification user email 
+PUT http://localhost:8080/admin/realms/dev/users/{{userId}}/execute-actions-email
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+[
+  "VERIFY_EMAIL"
+]
+
+
+### list groups
+GET http://localhost:8080/admin/realms/dev/groups
+Authorization: Bearer {{token}}
+
+### search group
+GET http://localhost:8080/admin/realms/dev/groups?search=customer
+Authorization: Bearer {{token}}
+
+### set groupId
+@groupId = df11ae57-447d-4e74-94bb-81b55371c837
+
+### add user to group
+PUT http://localhost:8080/admin/realms/dev/users/{{userId}}/groups/{{groupId}}
+Authorization: Bearer {{token}}
+
+
+### get public key
+GET http://localhost:8080/realms/dev/protocol/openid-connect/certs
+
+
+
+

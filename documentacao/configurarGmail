@@ -1,0 +1,36 @@
+✅ 1. No Gmail — criar uma Senha de Aplicativo
+
+É obrigatório. A senha normal NÃO funciona com SMTP.
+
+👉 Acesse: https://myaccount.google.com/apppasswords
+
+Selecione:
+
+Aplicativo: Mail
+
+Dispositivo: Other (Custom name) → “Keycloak”
+
+Ele vai gerar uma senha como:
+
+abcd efgh ijkl mnop
+
+
+⚠️ Se não aparecer a opção “Senha de App”, ative:
+Security → 2-Step Verification.
+
+✅ 2. Configurar o Gmail no Keycloak
+
+Realm Settings → Email
+
+Campo	Valor
+Host	smtp.gmail.com
+Porta	587
+From	seuemail@gmail.com
+Username	seuemail@gmail.com
+Password	senha de app
+SSL	❌ OFF
+StartTLS	✔️ ON
+Authentication	✔️ ON
+
+⚠️ Importante
+Você não deve marcar SSL.

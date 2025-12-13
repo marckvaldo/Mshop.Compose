@@ -15,6 +15,11 @@ services:
       MYSQL_USER: "mshop"
       MYSQL_PASSWORD: "mshop"
       MYSQL_DATABASE: "mshop"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 10s
+      retries: 3
     networks:
       - app-catalago
   MShop.MongoDB.dev:
@@ -55,6 +60,29 @@ services:
      - "8378:6379" 
    networks:
      - app-catalago
+
+  MShop.Keycloak.dev:
+    container_name: keycloak-dev
+    hostname: keycloak-dev
+    image: quay.io/keycloak/keycloak:26.4 #https://quay.io/repository/keycloak/keycloak?tab=tags
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_DB: mariadb
+      KC_DB_URL_HOST: catalagoDb-dev
+      KC_DB_URL_PORT: 3306
+      KC_DB_USERNAME: mshop
+      KC_DB_PASSWORD: mshop
+      KC_DB_URL_DATABASE: keycloak
+    command: start-dev
+    #command: start #use his command for production mode
+    ports:
+      - "8080:8080"
+    depends_on:
+      MShop.catalago.dev:
+        condition: service_healthy
+    networks:
+      - app-catalago
 
 networks:
   app-catalago:

@@ -74,7 +74,10 @@ services:
       KC_DB_USERNAME: mshop
       KC_DB_PASSWORD: mshop
       KC_DB_URL_DATABASE: keycloak
-    command: start-dev
+    volumes:
+      - ./keycloak:/opt/keycloak/data/import
+    command: 
+      - start-dev --import-realm
     #command: start #use his command for production mode
     ports:
       - "8080:8080"

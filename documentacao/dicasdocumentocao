@@ -1,0 +1,14 @@
+Arquitetura que você deve apresentar
+
+/src
+  /Api.Catalog
+  /Api.Customer
+  /Api.Shopping
+
+/docs
+  auth-flow.md
+  keycloak-setup.md
+  decisions.md
+
+
+Ter a pasta /docs é um diferencial forte em portfólio

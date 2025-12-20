@@ -1,0 +1,84 @@
+Realm: ecommerce
+
+Clients:
+- web-app        (login do usuário)
+- api-customer   (API)
+- api-shopping   (API)
+- api-catalogo   (API)
+- api-customer-admin (login do microservico customer)
+
+Groups:
+- customers
+- admins
+
+Roles:
+- Client Roles por API
+
+
+configurações do servico customer
+api-customer-admin
+Client authentication :on
+Authorization: on
+depois va em Sevice accounts roles
+    client role 
+        manage-users   
+
+web-app
+Direct access grants: on
+Client authentication : off
+Authorization: off
+
+
+
+Criar Client Roles (parte MAIS IMPORTANTE)
+📦 api-customer → Roles
+
+Clients → api-customer → Roles → Create role
+customer:read
+customer:update
+
+api-shopping → Roles
+shopping:checkout
+
+api-catalogo → Roles
+catalog:read
+catalog:write
+catalog:delete
+
+
+Criar Groups (PERFIS)
+customers
+
+Atribuir roles ao grupo
+Group customers → Role mapping → Assign role
+
+Client roles → api-customer
+    customer:read
+    customer:update
+
+Client roles → api-shopping
+    shopping:checkout
+    shopping:order:read
+
+(opcional)
+api-catalogo
+    catalog:read
+
+
+Group: admins
+admins
+Atribuir roles
+
+api-catalogo
+    catalog:read
+    catalog:write
+catalog:delete
+
+api-shopping
+    shopping:order:read
+
+api-customer
+    customer:read
+
+Criar Usuários pra fazer os testes
+

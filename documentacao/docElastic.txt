@@ -1,0 +1,6 @@
+assim que inicar o elastic o kibana vai parar por que precisa criar o usuari para o mesmo 
+para criar o usuario para o kibana execute o arquivo que esta no script/init.bash
+entre na pasta cd script
+execute o bahs ./init
+como você pode ser ele vai criar o usuario no elastic
+depois disso corre para o abreço

@@ -22,6 +22,7 @@ services:
       retries: 3
     networks:
       - app-catalago
+
   MShop.MongoDB.dev:
     image: mongo:6.0.5
     container_name: mongodb-dev
@@ -86,6 +87,49 @@ services:
         condition: service_healthy
     networks:
       - app-catalago
+  
+  MShop.Elasticsearch.dev:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.10.1
+    container_name: elasticsearch8
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=true           # Habilita autenticação
+      - xpack.security.transport.ssl.enabled=false
+      - ELASTIC_PASSWORD=elasticpassword      # Senha do usuário padrão 'elastic'
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    networks:
+      - app-catalago
+    volumes:
+      - elasticsearch:/usr/share/elasticsearch/data # Persistência de dados
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 1024M
+  
+  MShop.kibana.dev:
+    image: docker.elastic.co/kibana/kibana:8.10.1
+    container_name: kibana8
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+      - ELASTICSEARCH_USERNAME=kibana_user        # Usuário do Elasticsearch
+      - ELASTICSEARCH_PASSWORD=kibana # Senha definida no Elasticsearch
+    ports:
+      - "5601:5601"
+    networks:
+      - app-catalago
+    depends_on:
+      - MShop.Elasticsearch.dev
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 1024M
+
+volumes:
+  elasticsearch:
 
 networks:
   app-catalago:

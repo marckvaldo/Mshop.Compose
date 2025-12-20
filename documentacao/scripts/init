@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# Aguarda o Elasticsearch iniciar
+echo "Aguardando Elasticsearch iniciar..."
+until curl -s http://localhost:9200 > /dev/null; do
+  sleep 5
+done
+
+# Verifica se o usuário 'kibana_user' já existe
+echo "Verificando se o usuário kibana_user já existe..."
+USER_EXISTS=$(curl -s -u elastic:elasticpassword http://localhost:9200/_security/user/kibana_user)
+
+if echo "$USER_EXISTS" | grep -q '"kibana_user"'; then
+  echo "O usuário 'kibana_user' já existe. Nenhuma ação necessária."
+else
+  # Cria o usuário 'kibana_user' com as permissões necessárias
+  echo "Criando o usuário kibana_user..."
+
+  curl -X POST "http://localhost:9200/_security/role/log_creator" -H "Content-Type: application/json" -u elastic:elasticpassword  -d '{
+    "indices": [
+      {
+        "names": ["logs-*"],
+        "privileges": ["create_index", "write", "read","delete_index","manage","all"]
+      }
+    ]
+  }'
+
+  curl -X POST "http://localhost:9200/_security/user/kibana_user" -H "Content-Type: application/json" -u elastic:elasticpassword -d '{
+    "password": "kibana",
+    "roles": ["kibana_system","kibana_admin","log_creator"],
+    "full_name": "kibana_user",
+    "email": "kibana@example.com"
+  }'
+fi

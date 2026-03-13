@@ -23,7 +23,7 @@ username=dev
 # essa opção tem que esta marcado no client Direct access grant
 
 
-### get token acess
+### get token acess esse token e usado no microserviços para validar o jwt se foi criado no keycloak
 # @name auth
 POST http://localhost:8080/realms/ecommerce/protocol/openid-connect/token
 Content-Type: application/x-www-form-urlencoded
@@ -60,15 +60,17 @@ Content-Type: application/json
   ]
 }
 
-###
-GET http://localhost:8080/admin/realms/dev/users?email=marckvaldo@hotmail.com
+
+### obtem o usuario por email
+GET http://localhost:8080/admin/realms/ecommerce/users?email=marckvaldo@hotmail.com
 Authorization: Bearer {{token}}
 
-### set useId
-@userId = be124253-31d9-44ed-a016-9de0f2000b63
 
-###send verification user email 
-PUT http://localhost:8080/admin/realms/dev/users/{{userId}}/execute-actions-email
+### set useId
+@userId = 9dd2fbf1-33c8-4c5c-a5b3-7fddc7ac35ca
+
+###send verification emailto user
+PUT http://localhost:8080/admin/realms/ecommerce/users/{{userId}}/execute-actions-email
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
@@ -78,23 +80,25 @@ Content-Type: application/json
 
 
 ### list groups
-GET http://localhost:8080/admin/realms/dev/groups
+GET http://localhost:8080/admin/realms/ecommerce/groups
 Authorization: Bearer {{token}}
 
 ### search group
-GET http://localhost:8080/admin/realms/dev/groups?search=customer
+GET http://localhost:8080/admin/realms/ecommerce/groups?search=customer
 Authorization: Bearer {{token}}
 
 ### set groupId
-@groupId = df11ae57-447d-4e74-94bb-81b55371c837
+@groupId = 53b95ab8-5a8b-485c-ad81-45feda20d25d
 
 ### add user to group
-PUT http://localhost:8080/admin/realms/dev/users/{{userId}}/groups/{{groupId}}
+PUT http://localhost:8080/admin/realms/ecommerce/users/{{userId}}/groups/{{groupId}}
 Authorization: Bearer {{token}}
 
 
 ### get public key
 GET http://localhost:8080/realms/ecommerce/protocol/openid-connect/certs
+
+
 
 
 

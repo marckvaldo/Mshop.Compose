@@ -1,0 +1,111 @@
+Realm: ecommerce
+
+Clients: (são as aplicações que cominica com o keycloak)
+- web-app        (login do usuário)
+- api-customer   (API)
+- api-shopping   (API)
+- api-catalogo   (API)
+- api-customer-admin (login do microservico customer)
+
+Groups:
+- customers
+- admins
+
+Roles:
+- Client Roles por API
+
+
+Criando o primeiro cliente no keycloak ele é o cliente administrativo
+name: api-customer-admin
+config:
+    - Client authentication :on
+    - Authorization: on
+Agora va na aba -> Sevice accounts roles
+na opção assign role escolha -> client role 
+e adicionar a role -> manage-users   
+
+
+Criando o client que vai ser responsavel pelo login
+name: web-app
+config:
+    - Direct access grants: on
+    - Client authentication : off
+    - Authorization: off
+
+
+Criando os demais Clients
+
+name : api-customer
+config:
+    - todas as configurações off
+
+name : api-shopping
+config:
+    - todas as configurações off
+
+name : api-catalogo
+config:
+    - todas as configurações off
+
+
+Depois de ter criado os clients agora vamos criar as ROLES para cada cliente.
+
+Clients → api-customer → Roles → Create role
+customer:address:create
+customer:address:delete
+customer:address:read
+customer:read
+customer:update
+
+Clients → api-shopping → Roles → Create role
+shopping:checkout
+
+Clients → api-catalogo → Roles → Create role
+catalog:category:create
+catalog:category:delete
+catalog:category:read
+catalog:category:update
+catalog:create
+catalog:delete
+catalog:image:create
+catalog:image:delete
+catalog:image:read
+catalog:read
+catalog:update
+
+
+
+Criar Groups (PERFIS)
+customers
+admins
+
+depois de criar os grupos precisando dar permissões ou atribuir roles a eles dessa
+forma todos os usuario que fizem parte desse grupo vai herdar as roles do grupo
+atribuido ao usuario.
+
+Group → customers → Role mapping → Assign role
+    - api-customercustomer:update
+    - api-customercustomer:address:read
+    - api-customercustomer:address:delete
+    - api-customercustomer:address:create
+    - api-customercustomer:read
+    - api-shoppingshopping:checkout
+    - api-catalogocatalog:read
+
+todos os usuario de customer vão ter essas roles no tokem jwt
+
+
+agora vamos fazer isso no grupo admins
+    - api-customercustomer:read
+    - api-catalogocatalog:create
+    - api-catalogocatalog:delete
+    - api-catalogocatalog:category:delete
+    - api-catalogocatalog:image:delete
+    - api-catalogocatalog:image:create
+    - api-catalogocatalog:category:read
+    - api-catalogocatalog:read
+    - api-catalogocatalog:update
+    - api-catalogocatalog:category:create
+    - api-catalogocatalog:image:read
+
+

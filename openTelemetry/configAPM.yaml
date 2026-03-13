@@ -1,0 +1,31 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+      http:
+
+processors:
+  batch:
+
+exporters:
+  otlp/apm:
+    endpoint: MShop.apm-server.dev:8200
+    tls:
+      insecure: true
+
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [otlp/apm]
+
+    metrics:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [otlp/apm]
+
+    logs:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [otlp/apm]

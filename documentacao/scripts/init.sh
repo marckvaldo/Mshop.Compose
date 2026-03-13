@@ -19,8 +19,8 @@ else
   curl -X POST "http://localhost:9200/_security/role/log_creator" -H "Content-Type: application/json" -u elastic:elasticpassword  -d '{
     "indices": [
       {
-        "names": ["logs-*"],
-        "privileges": ["create_index", "write", "read","delete_index","manage","all"]
+        "names": ["logs-*", "otel-*"],
+        "privileges": ["create_index", "write", "read","delete_index","manage","all","view_index_metadata"]
       }
     ]
   }'

@@ -1,6 +1,37 @@
+#configurando o kibana no elastic
 assim que inicar o elastic o kibana vai parar por que precisa criar o usuari para o mesmo 
 para criar o usuario para o kibana execute o arquivo que esta no script/init.bash
 entre na pasta cd script
 execute o bahs ./init
-como você pode ser ele vai criar o usuario no elastic
-depois disso corre para o abreço
+como você pode ver ele vai criar o usuario no elastic
+depois disso corre para o abraço
+
+
+
+isso não é necessario 13/03/2026
+#configurando o setap para APM no kibana e elastic
+Management → Fleet
+Se for a primeira vez:
+Clique em "Set up Fleet"
+Aceite os defaults
+Aguarde finalizar
+Instale a APM Integration
+Fleet → Integrations → APM → Add APM
+Não precisa Agent ainda
+Só instalar a integração
+Isso cria automaticamente:
+Index templates
+Data streams
+Pipelines
+Dashboards
+
+
+isso não é necessario 13/03/2026
+#agora configurando o opentelemetry--collector com elastic
+acesse o kibana com o seu usuario e senha
+Stack Management → API Keys → Create API key
+Name: otel-collector
+Expiration: opcional (recomendado)
+depois na tela de criação vai mostrar um opção de copiar o seu token
+exemplo
+#ekM2TFM1c0J0clVPdEZNbDRNOWQ6WmxkRDl1MkpTeGl1TlBHNUdDUmlHUQ==

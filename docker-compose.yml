@@ -109,24 +109,24 @@ services:
           cpus: '0.5'
           memory: 1024M
   
-  MShop.kibana.dev:
-    image: docker.elastic.co/kibana/kibana:8.10.1
-    container_name: kibana8
-    environment:
-      - ELASTICSEARCH_HOSTS=http://MShop.Elasticsearch.dev:9200
-      - ELASTICSEARCH_USERNAME=kibana_user        # Usuário do Elasticsearch
-      - ELASTICSEARCH_PASSWORD=kibana # Senha definida no Elasticsearch
-    ports:
-      - "5601:5601"
-    networks:
-      - app-catalago
-    depends_on:
-      - MShop.Elasticsearch.dev
-    deploy:
-      resources:
-        limits:
-          cpus: '0.5'
-          memory: 1024M
+#  MShop.kibana.dev:
+#    image: docker.elastic.co/kibana/kibana:8.10.1
+#    container_name: kibana8
+#    environment:
+#      - ELASTICSEARCH_HOSTS=http://MShop.Elasticsearch.dev:9200
+#      - ELASTICSEARCH_USERNAME=kibana_user        # Usuário do Elasticsearch
+#      - ELASTICSEARCH_PASSWORD=kibana # Senha definida no Elasticsearch
+#    ports:
+#      - "5601:5601"
+#    networks:
+#      - app-catalago
+#    depends_on:
+#      - MShop.Elasticsearch.dev
+#    deploy:
+#      resources:
+#        limits:
+#          cpus: '0.5'
+#          memory: 1024M
 
 #  MShop.apm-server.dev:
 #    image: docker.elastic.co/apm/apm-server:8.10.1
@@ -146,31 +146,78 @@ services:
 #      - app-catalago   
 
 
-  MShop.jaeger.dev:
-    image: jaegertracing/all-in-one:1.54
-    container_name: jaeger
-    ports:
-      - "16686:16686" # UI
-      - "14250:4317" # gRPC collector
-    environment:
-      - COLLECTOR_OTLP_ENABLED=true
-    networks:
-      - app-catalago
+#  MShop.jaeger.dev:
+#    image: jaegertracing/all-in-one:1.54
+#    container_name: jaeger
+#    ports:
+#      - "16686:16686" # UI
+#      - "14250:4317" # gRPC collector
+#    environment:
+#      - COLLECTOR_OTLP_ENABLED=true
+#    networks:
+#      - app-catalago
   
-  MShop.otel-collector.dev:
-    image: otel/opentelemetry-collector-contrib:0.96.0
-    container_name: otel-collector
+#  MShop.otel-collector.dev:
+#    image: otel/opentelemetry-collector-contrib:0.96.0
+#    container_name: otel-collector
 #    depends_on:
 #      - MShop.apm-server.dev
+#    ports:
+#      - "4317:4317" # OTLP gRPC
+#      - "4318:4318" # OTLP HTTP
+#    volumes:
+#      - ./openTelemetry/config.yaml:/etc/otelcol/config.yaml
+#    command: ["--config=/etc/otelcol/config.yaml"]
+#    networks:
+#      - app-catalago
+
+  MShop.loki.dev:
+    hostname: loki
+    image: grafana/loki:3.6.7
     ports:
-      - "4317:4317" # OTLP gRPC
-      - "4318:4318" # OTLP HTTP
+      - 3100:3100
     volumes:
-      - ./openTelemetry/config.yaml:/etc/otelcol/config.yaml
-    command: ["--config=/etc/otelcol/config.yaml"]
+      - ./loki/loki-config.yaml:/etc/loki/config.yaml:ro
+      - ./loki/data:/loki
+    command: ['-config.file=/etc/loki/config.yaml']
+    restart: unless-stopped
     networks:
       - app-catalago
 
+  MShop.Grafana.dev:
+    hostname: grafana
+    image: grafana/grafana:12.4.0
+    ports:
+      - 3000:3000
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=508197
+    volumes:
+      - ./grafana/provisioning/datasources/default.yaml:/etc/grafana/provisioning/datasources/default.yaml:ro
+      - ./grafana/provisioning/dashboards/default.yaml:/etc/grafana/provisioning/dashboards/default.yaml:ro
+      - ./grafana/dashboards:/var/lib/grafana/dashboards:ro
+    restart: unless-stopped
+    networks:
+      - app-catalago
+  
+  MShop.Alloy.dev:
+    container_name: alloy
+    hostname: alloy
+    image: grafana/alloy:v1.12.0
+    command:
+      - run
+      - --server.http.listen-addr=0.0.0.0:12345
+      - /etc/alloy/config.alloy
+    ports:
+      - 12345:12345   #admin/debug
+      - 4317:4317     #gRPC
+      - 4318:4318     #HTTP
+    volumes:
+      - ./alloy/alloy-config.alloy:/etc/alloy/config.alloy:ro
+      #- /var/run/docker.sock:/var/run/docker.sock:ro // logs do docker
+    restart: unless-stopped
+    networks:
+      - app-catalago
 
 volumes:
   elasticsearch:

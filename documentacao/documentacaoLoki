@@ -1,0 +1,7 @@
+para verificar se loki esta funcionando bem 
+curl http://localhost:3100/loki/api/v1/labels
+{"status":"success"}
+curl http://localhost:3100/ready
+ready
+
+chmod -R 777 ./loki/data

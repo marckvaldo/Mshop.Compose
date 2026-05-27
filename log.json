@@ -1,0 +1,34 @@
+{
+    "body":"HTTP GET /api/v1/Cart/3fa85f64-5717-4562-b3fc-2c963f66afa6 =\u003e 404 em 7,0871 ms",
+    "traceid":"1580d8f90d6b50bc19ef8e0e232bfede",
+    "spanid":"c418ef1318fdadbe",
+    "severity":"Information",
+    "attributes":{
+        "ConnectionId":"0HNLS4MI1FUUM",
+        "Elapsed":7.0871,
+        "EnvironmentName":"Development",
+        "MachineName":"DESKTOP-O8IC7V9",
+        "Path":"/api/v1/Cart/3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "RequestId":"0HNLS4MI1FUUM:00000001",
+        "RequestMethod":"GET",
+        "RequestPath":"/api/v1/Cart/3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "RouteTemplate":"api/v1/Cart/{cartId:guid}",
+        "Service":"API-Shopping",
+        "SpanId":"c418ef1318fdadbe",
+        "StatusCode":404,
+        "TraceId":"1580d8f90d6b50bc19ef8e0e232bfede",
+        "message_template.text":"HTTP {RequestMethod} {RequestPath} =\u003e {StatusCode} em {Elapsed:0.0000} ms"
+    },
+    "resources":{
+        "deployment.environment":"Development",
+        "service.instance.id":"DESKTOP-O8IC7V9",
+        "service.name":"API-Shopping",
+        "service.version":"1.0.0",
+        "telemetry.sdk.language":"dotnet",
+        "telemetry.sdk.name":"serilog",
+        "telemetry.sdk.version":"4.2.0-main-057a8c1+057a8c1712d1268a4d7f0952819c535e45c56647"
+    },
+    "instrumentation_scope":{
+        "name":"Serilog.AspNetCore.RequestLoggingMiddleware"
+    }
+}

@@ -193,7 +193,7 @@ services:
       - GF_SECURITY_ADMIN_USER=admin
       - GF_SECURITY_ADMIN_PASSWORD=508197
     volumes:
-      - ./grafana/provisioning/datasources/default.yaml:/etc/grafana/provisioning/datasources/default.yaml:ro
+    #  - ./grafana/provisioning/datasources/default.yaml:/etc/grafana/provisioning/datasources/default.yaml:ro
       - ./grafana/provisioning/dashboards/default.yaml:/etc/grafana/provisioning/dashboards/default.yaml:ro
       - ./grafana/dashboards:/var/lib/grafana/dashboards:ro
     restart: unless-stopped
@@ -215,6 +215,35 @@ services:
     volumes:
       - ./alloy/alloy-config.alloy:/etc/alloy/config.alloy:ro
       #- /var/run/docker.sock:/var/run/docker.sock:ro // logs do docker
+    restart: unless-stopped
+    networks:
+      - app-catalago
+
+  MShop.Tempo.dev:
+    image: grafana/tempo:2.7.2
+    hostname: tempo
+    ports:
+      - "3200:3200"
+    #  - "4319:4317"
+    command: [ "-config.file=/etc/tempo.yaml" ]
+    volumes:
+      - ./tempo/tempo.yaml:/etc/tempo.yaml
+      - ./tempo/data:/tmp/tempo
+    restart: unless-stopped
+    networks:
+      - app-catalago
+  
+  MShop.Prometheus.dev:
+    image: prom/prometheus:v3.5.0
+    hostname: prometheus
+    ports:
+      - 9090:9090
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--web.enable-remote-write-receiver"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./prometheus/data:/prometheus/data
     restart: unless-stopped
     networks:
       - app-catalago
